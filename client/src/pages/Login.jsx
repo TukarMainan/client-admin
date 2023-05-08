@@ -1,12 +1,35 @@
+import { useState } from "react";
+import { loginAdmin } from "../store/action/actionCreator";
+
 export default function Login() {
+  const [login, setLogin] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleLogin = async e => {
+    try {
+      e.preventDefault();
+      const res = await loginAdmin(login);
+      console.log(res.message); // log the message if login is successful
+    } catch (err) {
+      console.log(err); // log the error if login fails
+    }
+  };
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setLogin(prevState => ({ ...prevState, [name]: value }));
+  };
+
   return (
     <section className="bg-white">
       <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
         <aside className="relative block h-16 lg:order-last lg:col-span-5 lg:h-full xl:col-span-6">
           <img
             alt="Pattern"
-            src="https://images.unsplash.com/photo-1605106702734-205df224ecce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-            className="absolute inset-0 h-full w-full object-cover"
+            src="https://playfulnotes.com/wp-content/uploads/teaching-toddlers-to-share-2.png"
+            className="absolute inset-0 h-full w-full object-cover rounded-3xl"
           />
         </aside>
 
@@ -39,6 +62,8 @@ export default function Login() {
                 </label>
 
                 <input
+                  onChange={handleChange}
+                  value={login.email}
                   required
                   type="email"
                   id="Email"
@@ -56,6 +81,8 @@ export default function Login() {
                 </label>
 
                 <input
+                  onChange={handleChange}
+                  value={login.password}
                   required
                   type="password"
                   id="Password"
@@ -65,17 +92,12 @@ export default function Login() {
               </div>
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                <button className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                <button
+                  onClick={e => handleLogin(e)}
+                  className="inline-block shrink-0 rounded-md border border-purple-600 bg-purple-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                >
                   Login
                 </button>
-
-                {/* <p className="mt-4 text-sm text-gray-500 sm:mt-0">
-                  Already have an account?
-                  <a href="#" className="text-gray-700 underline">
-                    Log in
-                  </a>
-                  .
-                </p> */}
               </div>
             </form>
           </div>

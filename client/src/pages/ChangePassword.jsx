@@ -62,7 +62,7 @@ export default function changePassword() {
   return (
     <>
       <section className="relative flex flex-wrap lg:h-screen lg:items-center">
-        <div className="bg-gradient-to-b ml-80 from-purple-400 to-white-500 rounded-3xl  w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
+        <div className="bg-gradient-to-b ml-80 from-purple-300 to-purple-100 rounded-3xl  w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
           <div className="mx-auto max-w-lg text-center">
             <p>🔐</p>
             <h1 className="text-2xl font-bold sm:text-3xl">

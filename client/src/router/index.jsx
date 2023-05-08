@@ -7,6 +7,9 @@ import Archieved from "../pages/Archieved";
 import AddAdmin from "../pages/AddAdmin";
 import ChangePassword from "../pages/ChangePassword";
 import Detail from "../pages/Detail";
+import Category from "../pages/Category";
+import CategoryDetail from "../pages/CategoryDetail";
+import History from "../pages/History";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +43,18 @@ const router = createBrowserRouter([
       {
         path: "/detail/:id",
         element: <Detail />,
+      },
+      {
+        path: "/category",
+        element: <Category />,
+      },
+      {
+        path: "/category/:id",
+        element: <CategoryDetail />,
+      },
+      {
+        path: "/history",
+        element: <History />,
       },
     ],
   },

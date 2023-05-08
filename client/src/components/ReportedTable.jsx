@@ -1,6 +1,18 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { banUser } from "../store/action/actionCreator";
+import toaster from "../store/action/toaster";
 
 export default function ReportedTable({ data }) {
+  const dispatch = useDispatch();
+
+  const handleSuspend = (id, e) => {
+    e.preventDefault();
+    dispatch(banUser(id));
+    toaster("User has been banned");
+    navigate("/reported");
+  };
+
   return (
     <>
       <tr>
@@ -18,18 +30,18 @@ export default function ReportedTable({ data }) {
         </td>
         <td className="whitespace-nowrap px-4 py-2 ">
           <Link
-            to={`/detail/${data?.id}`}
+            to={`/detail/${data?.id}`} //mestinya data?.Post?.id
             href="#"
-            className="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+            className="inline-block mr-6 rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
           >
-            View
+            View Detail
           </Link>
-          <a> </a>
           <a
+            onClick={e => handleSuspend(`${data?.id}`, e)} //mestinya user id
             href="#"
             className="inline-block rounded bg-red-500 px-4 py-2 text-xs font-medium text-white hover:bg-red-700"
           >
-            Block
+            Suspend User
           </a>
         </td>
       </tr>

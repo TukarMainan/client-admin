@@ -1,12 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchDetail } from "../store/action/actionCreator";
+import { updateStatusPost, banUser } from "../store/action/actionCreator";
+import toaster from "../store/action/toaster";
 
 export default function Detail() {
   const { id } = useParams();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPostDetail = async () => {
@@ -23,7 +26,20 @@ export default function Detail() {
     return state.detailReducer.detail;
   });
 
-  console.log("post :", post);
+  const handleArchive = (id, e) => {
+    e.preventDefault();
+    dispatch(updateStatusPost(id));
+    toaster("Post has been archived");
+    navigate("/reported");
+  };
+
+  const handleSuspend = (id, e) => {
+    e.preventDefault();
+    dispatch(banUser(id));
+    toaster("User has been banned");
+    navigate("/reported");
+  };
+
   return (
     <>
       <section>
@@ -57,7 +73,7 @@ export default function Detail() {
 
             <div className="sticky top-0">
               <strong className="rounded-full border border-blue-600 bg-gray-100 px-3 py-0.5 text-xs font-medium tracking-wide text-blue-600">
-                In report
+                Report open
               </strong>
 
               <div className="mt-8 flex justify-between">
@@ -70,7 +86,7 @@ export default function Detail() {
                 </div>
 
                 <p className="text-lg font-bold">
-                  Estimated price: {post?.price}
+                  Estimated price: {post?.price} IDR
                 </p>
               </div>
 
@@ -83,23 +99,26 @@ export default function Detail() {
               <form className="mt-8">
                 <div className="mt-8 flex gap-4">
                   <button
+                    onClick={e => handleArchive(`${post?.id}`, e)}
                     type="submit"
-                    className="block rounded bg-purple-700 px-5 py-3 text-xs font-medium text-white hover:bg-purple-900"
+                    className="block rounded bg-red-500 px-5 py-3 text-xs font-medium text-white hover:bg-red-600"
                   >
-                    Archieve
+                    Archive Post
                   </button>
                   <button
+                    onClick={e => handleSuspend(`${post?.id}`, e)} //mestinya post?.User?.id
                     type="submit"
-                    className="block rounded bg-purple-700 px-5 py-3 text-xs font-medium text-white hover:bg-purple-900"
+                    className="block rounded bg-red-600 px-5 py-3 text-xs font-medium text-white hover:bg-red-800"
                   >
-                    Suspend
+                    Suspend User
                   </button>
-                  <button
+                  {/* <button
+                    onClick={() => navigate("/reported")} //mestinya post?.User?.id
                     type="submit"
-                    className="block rounded bg-slate-400 px-5 py-3 text-xs font-medium text-white hover:bg-slate-800"
+                    className="block rounded bg-slate-500 px-5 py-3 text-xs font-medium text-white hover:bg-red-800"
                   >
                     Back
-                  </button>
+                  </button> */}
                 </div>
               </form>
             </div>

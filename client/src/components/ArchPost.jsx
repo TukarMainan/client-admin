@@ -1,6 +1,16 @@
+import { useDispatch, useSelector } from "react-redux";
+import { banUser } from "../store/action/actionCreator";
+import toaster from "../store/action/toaster";
+import { Link } from "react-router-dom";
+
 export default function ArchPost({ data }) {
-  const handleSuspend = id => {
-    console.log("id :", id);
+  const dispatch = useDispatch();
+
+  const handleSuspend = (id, e) => {
+    e.preventDefault();
+    dispatch(banUser(id));
+    toaster("User has been banned");
+    navigate("/archieve");
   };
 
   const handleDetail = id => {
@@ -19,7 +29,15 @@ export default function ArchPost({ data }) {
           Username: {data?.User?.id}
         </td>
         <td className="grid grid-cols-2 whitespace-nowrap px-4 py-2 text-purple-900">
-          <button onClick={() => handleDetail(data?.id)}>View Detail</button>
+          <button>
+            <Link
+              to={`/detail/${data?.id}`} //mestinya data?.Post?.id
+              href="#"
+              className="inline-block mr-6 rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
+            >
+              View Detail
+            </Link>
+          </button>
           <button onClick={() => handleSuspend(data?.UserId)}>
             Suspend User
           </button>

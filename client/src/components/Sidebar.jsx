@@ -98,7 +98,7 @@ export default function Sidebar() {
                       d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                     />
                   </svg>
-                  <span className="text-sm font-medium"> Teams </span>
+                  <span className="text-sm font-medium"> Manage </span>
                 </div>
 
                 <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -137,10 +137,36 @@ export default function Sidebar() {
                     />
                   </svg>
                   <Link to={"/archieve"}>
-                    <span className="text-sm font-medium">
-                      {" "}
-                      Archieved Posts{" "}
-                    </span>
+                    <span className="text-sm font-medium">Archived Posts</span>
+                  </Link>
+                </a>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 opacity-75"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 20l-5.5-4L3 12l1.5-4L10 4l3.5 3.5L17 12l-1.5 4L10 20z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 9l4-4m0 0l4 4m-4-4v14"
+                    />
+                  </svg>
+
+                  <Link to={"/category"}>
+                    <span className="text-sm font-medium">Category List</span>
                   </Link>
                 </a>
               </nav>
@@ -165,7 +191,7 @@ export default function Sidebar() {
                     />
                   </svg>
 
-                  <span className="text-sm font-medium">Admin Settings</span>
+                  <span className="text-sm font-medium"> Settings</span>
                 </div>
 
                 <span className="shrink-0 transition duration-300 group-open:-rotate-180">
@@ -231,6 +257,27 @@ export default function Sidebar() {
                       {" "}
                       Change Password{" "}
                     </span>
+                  </Link>
+                </a>
+                <a
+                  href="#"
+                  className="flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M15.707 4.293a1 1 0 00-1.414 0L4 14.586V16h1.414L15.707 5.707a1 1 0 000-1.414zM5.828 15H5v-.828l9.293-9.293a1 1 0 011.414 0l1.586 1.586a1 1 0 010 1.414L8.828 15H8v-.828L13.172 9.58a1 1 0 00-1.414-1.414L6.414 13.172 5.828 13.758V15z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+
+                  <Link to={"/history"}>
+                    <span className="text-sm font-medium">History Log</span>
                   </Link>
                 </a>
 

@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchPosts } from "../store/action/actionCreator";
+import ListHome from "../components/ListHome";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -24,10 +25,10 @@ export default function Home() {
   return (
     <>
       <div className="bg-gradient-to-b from-purple-100 to-white-500 rounded-3xl m-6">
-        <h1 className="pt-12 pl-12 mb-12 text-2xl font-bold text-slate-700 sm:text-3xl md:text-4xl">
-          Welcome to TukarMainan 🦖 CMS admin
+        <h1 className="pt-16 pl-12 mb-12 text-2xl font-bold text-slate-700 sm:text-3xl md:text-4xl">
+          Welcome to TukarMainan CMS admin 🦖
         </h1>
-        <div className="mr-12 ml-6 rounded-lg  grid grid-cols-3 gap-5 m-18 p-6">
+        <div className="mr-12 pl-48 pr-48 ml-6 rounded-lg  grid grid-cols-3 gap-5 m-18 p-6">
           {/* first card */}
           <a
             href="#"
@@ -137,7 +138,33 @@ export default function Home() {
               </svg>
             </div>
           </a>
+          {/* table */}
         </div>
+        <table className="m-12 w-5/6 divide-y-2 divide-gray-200 rounded-2xl bg-white text-sm">
+          <thead className="ltr:text-left rtl:text-right">
+            <tr>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                Posts Title
+              </th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                Post Description
+              </th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                User Profile
+              </th>
+              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                Posted on
+              </th>
+              <th className="px-4 py-2"></th>
+            </tr>
+          </thead>
+
+          <tbody className="divide-y divide-gray-200">
+            {postData.map(data => {
+              return <ListHome key={data.id} data={data} />;
+            })}
+          </tbody>
+        </table>
       </div>
     </>
   );
