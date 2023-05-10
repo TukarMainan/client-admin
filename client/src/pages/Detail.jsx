@@ -26,6 +26,7 @@ export default function Detail() {
     return state.detailReducer.detail;
   });
 
+  console.log("post :", post);
   const handleArchive = (id, e) => {
     e.preventDefault();
     dispatch(updateStatusPost(id));
@@ -33,11 +34,22 @@ export default function Detail() {
     navigate("/reported");
   };
 
-  const handleSuspend = (id, e) => {
-    e.preventDefault();
-    dispatch(banUser(id));
-    toaster("User has been banned");
-    navigate("/reported");
+  const handleSuspend = async (id, e) => {
+    try {
+      e.preventDefault();
+      const res = await dispatch(banUser(id));
+      console.log("res :", res);
+      if (!res) {
+        toaster("Suspending error");
+      }
+
+      if (res.message) {
+        toaster(res.message);
+        navigate("/archieve");
+      }
+    } catch (err) {
+      console.log("err :", err);
+    }
   };
 
   return (
@@ -106,7 +118,7 @@ export default function Detail() {
                     Archive Post
                   </button>
                   <button
-                    onClick={e => handleSuspend(`${post?.id}`, e)} //mestinya post?.User?.id
+                    onClick={e => handleSuspend(`${post?.UserId}`, e)} //mestinya post?.User?.id
                     type="submit"
                     className="block rounded bg-red-600 px-5 py-3 text-xs font-medium text-white hover:bg-red-800"
                   >
