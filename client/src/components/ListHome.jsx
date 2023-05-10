@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { updateStatusPost } from "../store/action/actionCreator";
+import { Link } from "react-router-dom";
 
 export default function ListHome({ data }) {
   const dispatch = useDispatch();
@@ -32,10 +33,10 @@ export default function ListHome({ data }) {
     <>
       <tr>
         <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-          {data?.title}
+          <Link to={`/detail/${data?.id}`}>{data?.title}</Link>
         </td>
         <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-          {data?.description}
+          {/* {data?.description} */}
         </td>
         <td className="whitespace-nowrap px-4 py-2 text-gray-700">
           {data?.User?.username}

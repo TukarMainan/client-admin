@@ -15,11 +15,14 @@ export default function Home() {
   const postData = useSelector(state => {
     return state.postReducer.posts;
   });
+  console.log("postData :", postData);
+
   // fetch totalUser
   const userData = useSelector(state => {
     return state.userReducer.users;
   });
 
+  console.log("userData :", userData);
   // fetch blockedUser
   const blockedUser = userData.filter(user => user.status == "blocked");
   return (
@@ -147,7 +150,7 @@ export default function Home() {
                 Posts Title
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                Post Description
+                {/* Post Description */}
               </th>
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 User Profile
@@ -155,7 +158,7 @@ export default function Home() {
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Posted on
               </th>
-              <th className="px-4 py-2"></th>
+              <th className="px-4 py-2">Action</th>
             </tr>
           </thead>
 

@@ -26,9 +26,9 @@ export default function AddAdmin() {
     });
   };
 
-  const toaster = () => {
+  const toaster = msg => {
     return Toastify({
-      text: "New admin is added",
+      text: msg,
       duration: 3000,
       destination: "https://github.com/apvarun/toastify-js",
       newWindow: true,
@@ -48,8 +48,16 @@ export default function AddAdmin() {
     try {
       e.preventDefault();
       //   console.log("admin :", admin);
-      await dispatch(addAdmin(admin));
-      toaster();
+      const res = await dispatch(addAdmin(admin));
+
+      if (!res) {
+        toaster("Error adding admin");
+      }
+
+      if (res.message == "Success creating new admin") {
+        toaster(res.message);
+        setAdmin({ email: "", username: "", password: "" });
+      }
       //   navigate("/");
     } catch (err) {
       console.log("err :", err);
