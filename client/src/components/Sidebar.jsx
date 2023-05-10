@@ -22,11 +22,13 @@ export default function Sidebar() {
       <div className="flex h-screen flex-col h-screen justify-between border-e bg-slate-50">
         <div className="px-4 py-6">
           <div className="grid grid-cols-2 flex items-center">
-            <img
+            {/* <img
               className="h-12 w-12 m-0 p-0"
               src="../src/assets/logo-full.png"
-            />
-            {/* <p className="h-12 m-0 p-0">Tukar Mainan CMS</p> */}
+            /> */}
+            <p className="ml-4 mb-6 font-bold text-purple-400 text-2xl ">
+              Tukar Mainan CMS 🧸
+            </p>
           </div>
           <nav aria-label="Main Nav" className="mt-6 flex flex-col space-y-1">
             <a

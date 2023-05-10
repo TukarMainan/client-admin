@@ -1,20 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchArchieved } from "../store/action/actionCreator";
+import { fetchPosts } from "../store/action/actionCreator";
 import ArchPost from "../components/ArchPost";
 
 export default function Archieved() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchArchieved());
+    dispatch(fetchPosts());
   }, [dispatch]);
 
-  const archieves = useSelector(state => {
-    return state.archieveReducer.archieves;
+  const posts = useSelector(state => {
+    return state.postReducer.posts;
   });
+  console.log("posts :", posts);
 
-  //   console.log("archieves :", archieves);
   return (
     <div className=" bg-gradient-to-b from-purple-100 to-white-500 rounded-3xl m-6">
       <div className="overflow-x-auto">
@@ -27,9 +27,9 @@ export default function Archieved() {
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Post Title
               </th>
-              <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+              {/* <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Description
-              </th>
+              </th> */}
               <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                 Username Profile
               </th>
@@ -43,9 +43,10 @@ export default function Archieved() {
             {/* {reportData.map(data => {
               return <ReportedTable key={data.id} data={data} />;
             })} */}
-            {Array.isArray(archieves) &&
-              archieves?.map(data => {
-                return <ArchPost key={data.id} data={data} />;
+            {Array.isArray(posts) &&
+              posts?.map(data => {
+                if (data.status == "archived")
+                  return <ArchPost key={data.id} data={data} />;
               })}
           </tbody>
         </table>

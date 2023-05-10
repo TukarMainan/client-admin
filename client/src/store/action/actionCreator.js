@@ -119,9 +119,12 @@ export const fetchPosts = () => {
 export const fetchReports = () => {
   return async dispatch => {
     try {
-      const res = await fetch(
-        BASE_URL + "/reports?status_like=open&_embed=posts"
-      );
+      const res = await fetch(BASE_URL + "/reports", {
+        headers: {
+          "Content-Type": "application/json",
+          access_token: localStorage.access_token,
+        },
+      });
 
       //   error handling
       if (!res.ok) {
@@ -141,7 +144,7 @@ export const fetchReports = () => {
 
 // archive post
 export const updateStatusPost = id => {
-  console.log("id :", id);
+  // console.log("id :", id);
   return async dispatch => {
     try {
       const res = await fetch(BASE_URL + `/posts/${id}/archive`, {
@@ -154,6 +157,7 @@ export const updateStatusPost = id => {
       });
 
       if (!res.ok) throw await res.text();
+      const response = await res.json();
       return { message: "Post has been archived" };
     } catch (err) {
       console.log(err);
@@ -165,7 +169,7 @@ export const updateStatusPost = id => {
 export const banUser = id => {
   return async dispatch => {
     try {
-      const res = await fetch(BASE_URL + `/user/${id}/suspend`, {
+      const res = await fetch(BASE_URL + `/users/${id}/suspend`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -174,7 +178,9 @@ export const banUser = id => {
       });
 
       if (!res.ok) throw await res.text();
-      return { message: "Post has been archived" };
+      const response = await res.json();
+      // console.log("response :", response);
+      return response;
     } catch (err) {
       console.log(err);
     }
