@@ -1,9 +1,10 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "http://54.169.72.32";
+import axios from "axios";
 
 export const addAdmin = payload => {
   return async dispatch => {
     try {
-      const res = await fetch(BASE_URL + "/register", {
+      const res = await fetch(BASE_URL + "/admins/register", {
         //nanti tambah /admins sebelum register
         method: "POST",
         headers: {
@@ -14,7 +15,9 @@ export const addAdmin = payload => {
       });
 
       if (!res.ok) throw await res.text();
-      return { message: "Admin has been added" };
+
+      const response = await res.json();
+      return response;
     } catch (err) {
       console.log(err);
     }
@@ -22,10 +25,9 @@ export const addAdmin = payload => {
 };
 
 export const updatePassword = payload => {
-  console.log("payload :", payload);
   return async dispatch => {
     try {
-      const res = await fetch(BASE_URL + "/auth/admins/update-password", {
+      const res = await fetch(BASE_URL + "/admins/update-password", {
         // "/auth/admins/update-password"
         method: "PATCH",
         headers: {
@@ -36,6 +38,8 @@ export const updatePassword = payload => {
       });
 
       if (!res.ok) throw await res.text();
+      const response = await res.json();
+      console.log("response :", response);
       return { message: "Password has been changed" };
     } catch (err) {
       console.log(err);
@@ -47,7 +51,7 @@ export const updatePassword = payload => {
 export const fetchDetail = id => {
   return async dispatch => {
     try {
-      const res = await fetch(BASE_URL + "/posts/" + id);
+      const res = await fetch(BASE_URL + "/public/posts/" + id);
 
       //   error handling
       if (!res.ok) {
@@ -93,7 +97,7 @@ export const fetchArchieved = () => {
 export const fetchPosts = () => {
   return async dispatch => {
     try {
-      const res = await fetch(BASE_URL + "/posts");
+      const res = await fetch(BASE_URL + "/public/posts");
 
       //   error handling
       if (!res.ok) {
@@ -140,7 +144,7 @@ export const updateStatusPost = id => {
   console.log("id :", id);
   return async dispatch => {
     try {
-      const res = await fetch(BASE_URL + `/posts/${id}/suspend`, {
+      const res = await fetch(BASE_URL + `/posts/${id}/archive`, {
         //nanti tambah /admins sebelum register
         method: "PATCH",
         headers: {
@@ -181,7 +185,7 @@ export const banUser = id => {
 export const fetchCategories = () => {
   return async dispatch => {
     try {
-      const res = await fetch(BASE_URL + "/categories");
+      const res = await fetch(BASE_URL + "/public/categories");
 
       //   error handling
       if (!res.ok) {
@@ -228,7 +232,7 @@ export const addCategory = payload => {
 export const fetchOneCategory = id => {
   return async dispatch => {
     try {
-      const res = await fetch(BASE_URL + "/categories/" + id);
+      const res = await fetch(BASE_URL + "/public/categories/" + id);
 
       //   error handling
       if (!res.ok) {
@@ -275,7 +279,7 @@ export const updateCategory = (id, value) => {
 export const fetchLogs = () => {
   return async dispatch => {
     try {
-      const res = await fetch(BASE_URL + "/logs");
+      const res = await fetch(BASE_URL + "/adminlogs");
 
       //   error handling
       if (!res.ok) {
@@ -294,25 +298,29 @@ export const fetchLogs = () => {
   };
 };
 
+// login admin
 export const loginAdmin = payload => {
   console.log("payload :", payload);
   return async dispatch => {
     try {
-      const res = await fetch(BASE_URL + "/auth/admins/login", {
-        // "/auth/admins/update-password"
-        method: "PATCH",
+      const res = await fetch(BASE_URL + "/admins/login", {
+        method: "POST",
         headers: {
+          Accept: "application/json",
           "Content-Type": "application/json",
-          access_token: localStorage.access_token,
         },
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw await res.text();
-      return { message: "Login Success" };
+      if (!res.ok) {
+        throw await res.text();
+      }
+
+      const response = await res.json();
+      console.log("response :", response);
+      return response;
     } catch (err) {
       console.log(err);
-      return { message: "Login Failed" };
     }
   };
 };

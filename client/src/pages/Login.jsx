@@ -1,17 +1,51 @@
 import { useState } from "react";
 import { loginAdmin } from "../store/action/actionCreator";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [login, setLogin] = useState({
-    email: "",
+    username: "",
     password: "",
   });
+
+  const toaster = msg => {
+    return Toastify({
+      text: msg,
+      duration: 3000,
+      destination: "https://github.com/apvarun/toastify-js",
+      newWindow: true,
+      close: true,
+      gravity: "top", // `top` or `bottom`
+      position: "right", // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: "linear-gradient(to right, #9333EA, #9333EA)",
+      },
+      onClick: function () {}, // Callback after click
+    }).showToast();
+  };
 
   const handleLogin = async e => {
     try {
       e.preventDefault();
-      const res = await loginAdmin(login);
-      console.log(res.message); // log the message if login is successful
+      const res = await dispatch(loginAdmin(login));
+      console.log("res :", res);
+
+      if (!res) {
+        toaster(`Wrong password`);
+        setLogin({ username: "", password: "" });
+      }
+
+      if (res.access_token) {
+        localStorage.access_token = res.access_token;
+        localStorage.id = res.id;
+        toaster(`Welcome again ${res.username}`);
+        navigate("/");
+      }
     } catch (err) {
       console.log(err); // log the error if login fails
     }
@@ -55,19 +89,19 @@ export default function Login() {
             <form action="#" className="mt-8 grid grid-cols-6 gap-6">
               <div className="col-span-6">
                 <label
-                  for="Email"
+                  for="username"
                   className="block text-sm font-medium text-gray-700"
                 >
-                  Email
+                  Username
                 </label>
 
                 <input
                   onChange={handleChange}
-                  value={login.email}
+                  value={login.username}
                   required
-                  type="email"
-                  id="Email"
-                  name="email"
+                  type="username"
+                  id="username"
+                  name="username"
                   className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
